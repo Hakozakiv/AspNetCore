@@ -1,0 +1,5 @@
+/home/vhh/AspNetCore/obj/Debug/net10.0/AspNetCore.GeneratedMSBuildEditorConfig.editorconfig
+/home/vhh/AspNetCore/obj/Debug/net10.0/AspNetCore.AssemblyInfoInputs.cache
+/home/vhh/AspNetCore/obj/Debug/net10.0/AspNetCore.AssemblyInfo.cs
+/home/vhh/AspNetCore/obj/Debug/net10.0/AspNetCore.csproj.CoreCompileInputs.cache
+/home/vhh/AspNetCore/obj/Debug/net10.0/AspNetCore.sourcelink.json

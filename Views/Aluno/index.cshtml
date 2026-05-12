@@ -1,0 +1,26 @@
+@model IEnumerable<AspNetCore.Models.Aluno>
+
+<h2>Lista de Alunos</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>Curso</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>@item.Nome</td>
+            <td>@item.Matricula</td>
+            <td>@item.Curso</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
