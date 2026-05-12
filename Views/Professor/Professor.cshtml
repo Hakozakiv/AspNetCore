@@ -16,7 +16,8 @@
                 <th>Nome</th>
                 <th>E-mail</th>
                 <th>Registro Funcional</th>
-                <th>Especialidade</th>
+                <th>Área de Atuação
+                </th>
                 <th class="text-center">Ações</th>
             </tr>
         </thead>
@@ -28,8 +29,8 @@
                     <tr>
                         <td>@professor.Nome</td>
                         <td>@professor.Email</td>
-                        <td>@professor.RegistroFuncional</td>
-                        <td>@professor.Especialidade</td>
+                        <td>@professor.Siap</td>
+                        <td>@professor.Area</td>
                         <td class="text-center">
                             <a asp-action="Edit" asp-route-id="@professor.Id" class="btn btn-sm btn-warning">Editar</a>
                             <a asp-action="Delete" asp-route-id="@professor.Id" class="btn btn-sm btn-danger">Excluir</a>

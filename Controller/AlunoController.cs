@@ -1,5 +1,8 @@
-namespace AspNetCore.Controllers
+using Microsoft.AspNetCore.Mvc; // Resolve IActionResult, Controller, HttpPost
+using AspNetCore.Models;       // Resolve Aluno e Professor (ajuste se seu namespace for outro)
+using System.Collections.Generic; 
 
+namespace AspNetCore.Controllers // Verifique se o nome da pasta é Controller ou Controllers
 {
     public class AlunoController : Controller
     {

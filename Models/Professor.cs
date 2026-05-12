@@ -1,5 +1,6 @@
-using Models;
-namespace Models
+using Microsoft.AspNetCore.Mvc;
+using AspNetCore.Models;
+namespace AspNetCore.Models
 {
     public class Professor : Pessoa
     {

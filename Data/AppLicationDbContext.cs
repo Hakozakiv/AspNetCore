@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; // Resolve DbContext e ModelBuilder
 using AspNetCore.Models;
 
 namespace AspNetCore.Data

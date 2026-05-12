@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Mvc; // Resolve IActionResult, Controller, HttpPost
+using AspNetCore.Models;       // Resolve Aluno e Professor (ajuste se seu namespace for outro)
+using System.Collections.Generic; 
+
 namespace AspNetCore.Controllers
 {
     public class AccountController : Controller

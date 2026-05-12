@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
+using Microsoft.AspNetCore.Mvc;
 namespace AspNetCore.Models
 {
     public class LoginViewModel
