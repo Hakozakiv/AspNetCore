@@ -1,62 +1,94 @@
-using AspNetCore.Models;
 using AspNetCore.Data;
+using AspNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace AspNetCore.Controllers;
-
-public class AlunoController : Controller
+namespace AspNetCore.Controllers
 {
-    readonly AlunoRepository _alunoRepository;
-
-    public AlunoController(AlunoRepository alunoRepository)
+    public class AlunoController : Controller
     {
-        _alunoRepository = alunoRepository;
-    }
+        private readonly AlunoRepository _alunoRepository;
 
-    public async Task<IActionResult> Index()
-    {
-        var alunos = await _alunoRepository.GetAllAlunosAsync();
-        return View(alunos);
-    }
-
-    public IActionResult CriarAluno()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CriarAlunoAsync(Aluno aluno)
-    {
-        if(await _alunoRepository.CriarAlunoAsync(aluno))
+        public AlunoController(AlunoRepository alunoRepository)
         {
+            _alunoRepository = alunoRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var alunos = await _alunoRepository.ObterTodosAsync();
+            return View(alunos);
+        }
+
+        public IActionResult Create()
+        {
+            return View(new Aluno());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Aluno aluno)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(aluno);
+            }
+
+            await _alunoRepository.AdicionarAsync(aluno);
             TempData["Tipo"] = "success";
             TempData["Mensagem"] = $"Aluno {aluno.Nome} cadastrado com sucesso!";
-        } else
-        {
-            TempData["Tipo"] = "danger";
-            TempData["Mensagem"] = $"Aluno {aluno.Nome} não cadastrado!";
+            return RedirectToAction(nameof(Index));
         }
-        return RedirectToAction("CriarAluno");
-    }
 
-    public IActionResult AtualizarAluno()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> AtualizarAlunoAsync(Aluno aluno)
-    {
-        if(await _alunoRepository.AtualizarAlunoAsync(aluno))
+        public async Task<IActionResult> Edit(int id)
         {
+            var aluno = await _alunoRepository.ObterPorIdAsync(id);
+            if (aluno == null)
+            {
+                return NotFound();
+            }
+
+            return View(aluno);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Aluno aluno)
+        {
+            if (id != aluno.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(aluno);
+            }
+
+            await _alunoRepository.AtualizarAsync(aluno);
             TempData["Tipo"] = "success";
             TempData["Mensagem"] = $"Aluno {aluno.Nome} atualizado com sucesso!";
-        } else
-        {
-            TempData["Tipo"] = "danger";
-            TempData["Mensagem"] = $"Aluno {aluno.Nome} não atualizado!";
+            return RedirectToAction(nameof(Index));
         }
-        return RedirectToAction("AtualizarAluno");
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var aluno = await _alunoRepository.ObterPorIdAsync(id);
+            if (aluno == null)
+            {
+                return NotFound();
+            }
+
+            return View(aluno);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _alunoRepository.ExcluirAsync(id);
+            TempData["Tipo"] = "success";
+            TempData["Mensagem"] = "Aluno excluido com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

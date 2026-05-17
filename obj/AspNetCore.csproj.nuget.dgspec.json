@@ -1,26 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/home/vhh/AspNetCore/AspNetCore.csproj": {}
+    "C:\\Users\\Victo\\Desktop\\AspNetCore\\AspNetCore.csproj": {}
   },
   "projects": {
-    "/home/vhh/AspNetCore/AspNetCore.csproj": {
+    "C:\\Users\\Victo\\Desktop\\AspNetCore\\AspNetCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/vhh/AspNetCore/AspNetCore.csproj",
+        "projectUniqueName": "C:\\Users\\Victo\\Desktop\\AspNetCore\\AspNetCore.csproj",
         "projectName": "AspNetCore",
-        "projectPath": "/home/vhh/AspNetCore/AspNetCore.csproj",
-        "packagesPath": "/home/vhh/.nuget/packages/",
-        "outputPath": "/home/vhh/AspNetCore/obj/",
+        "projectPath": "C:\\Users\\Victo\\Desktop\\AspNetCore\\AspNetCore.csproj",
+        "packagesPath": "C:\\Users\\Victo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Victo\\Desktop\\AspNetCore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/vhh/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Victo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "/usr/lib/dotnet/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -52,6 +58,10 @@
               "version": "[10.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.7, )"
             }
@@ -75,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.107/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

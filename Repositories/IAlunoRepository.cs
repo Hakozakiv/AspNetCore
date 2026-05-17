@@ -1,11 +1,13 @@
 using AspNetCore.Models;
-using Aluno = AspNetCore.Controllers.AlunoController;
-namespace AspNetCore.Data;
-public interface IAlunoRepository
+
+namespace AspNetCore.Data
 {
-    Task<List<Aluno>> GetAllAsync();
-    Task<Aluno?> GetByIdAsync(int id);
-    Task AdicionarAsync(Aluno aluno);
-    Task AtualizarAsync(Aluno aluno);
-    Task DeletarAsync(int id);
+    public interface IAlunoRepository
+    {
+        Task<List<Aluno>> ObterTodosAsync();
+        Task<Aluno?> ObterPorIdAsync(int id);
+        Task AdicionarAsync(Aluno aluno);
+        Task AtualizarAsync(Aluno aluno);
+        Task ExcluirAsync(int id);
+    }
 }

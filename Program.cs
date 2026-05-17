@@ -1,18 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using AspNetCore.Data; // Ajustado de SeuProjeto para AspNetCore
+using AspNetCore.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configura o Banco de Dados
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// 2. ADICIONE ISSO: Configura os serviços do MVC (Controllers com Views)
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySQL(connectionString!));
+
+builder.Services.AddScoped<AlunoRepository>();
+builder.Services.AddScoped<ProfessorRepository>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// 3. ADICIONE ISSO: Configura o pipeline de navegação
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -20,13 +22,18 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Essencial para carregar CSS e JS (Bootstrap)
+app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization(); // Essencial para a tela de login funcionar depois
+app.UseAuthorization();
 
-// 4. ADICIONE ISSO: Define a rota padrão (onde o sistema começa)
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.EnsureCreated();
+}
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");

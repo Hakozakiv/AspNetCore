@@ -1,0 +1,164 @@
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE DATABASE `SystemaAC`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (13ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `Alunos` (
+          `Id` int NOT NULL AUTO_INCREMENT,
+          `Matricula` longtext NOT NULL,
+          `Curso` longtext NOT NULL,
+          `Nome` varchar(100) NOT NULL,
+          `Sobrenome` longtext NOT NULL,
+          `Cpf` longtext NOT NULL,
+          `Email` longtext NOT NULL,
+          `DataNascimento` datetime(6) NOT NULL,
+          PRIMARY KEY (`Id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `Professores` (
+          `Id` int NOT NULL AUTO_INCREMENT,
+          `Siap` longtext NOT NULL,
+          `Area` longtext NOT NULL,
+          `Nome` varchar(100) NOT NULL,
+          `Sobrenome` longtext NOT NULL,
+          `Cpf` longtext NOT NULL,
+          `Email` longtext NOT NULL,
+          `DataNascimento` datetime(6) NOT NULL,
+          PRIMARY KEY (`Id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (17ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `Disciplinas` (
+          `Id` int NOT NULL AUTO_INCREMENT,
+          `Nome` varchar(100) NOT NULL,
+          `CargaHoraria` int NOT NULL,
+          `Periodo` longtext NOT NULL,
+          `ProfessorId` int NULL,
+          PRIMARY KEY (`Id`),
+          CONSTRAINT `FK_Disciplinas_Professores_ProfessorId` FOREIGN KEY (`ProfessorId`) REFERENCES `Professores` (`Id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (17ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `AlunoDisciplina` (
+          `AlunosId` int NOT NULL,
+          `DisciplinasId` int NOT NULL,
+          PRIMARY KEY (`AlunosId`, `DisciplinasId`),
+          CONSTRAINT `FK_AlunoDisciplina_Alunos_AlunosId` FOREIGN KEY (`AlunosId`) REFERENCES `Alunos` (`Id`) ON DELETE CASCADE,
+          CONSTRAINT `FK_AlunoDisciplina_Disciplinas_DisciplinasId` FOREIGN KEY (`DisciplinasId`) REFERENCES `Disciplinas` (`Id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (20ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `Notas` (
+          `Id` int NOT NULL AUTO_INCREMENT,
+          `AlunoId` int NOT NULL,
+          `DisciplinaId` int NOT NULL,
+          `Valor` decimal(18,2) NOT NULL,
+          `Descricao` longtext NOT NULL,
+          PRIMARY KEY (`Id`),
+          CONSTRAINT `FK_Notas_Alunos_AlunoId` FOREIGN KEY (`AlunoId`) REFERENCES `Alunos` (`Id`) ON DELETE CASCADE,
+          CONSTRAINT `FK_Notas_Disciplinas_DisciplinaId` FOREIGN KEY (`DisciplinaId`) REFERENCES `Disciplinas` (`Id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (14ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `IX_AlunoDisciplina_DisciplinasId` ON `AlunoDisciplina` (`DisciplinasId`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (11ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `IX_Disciplinas_ProfessorId` ON `Disciplinas` (`ProfessorId`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `IX_Notas_AlunoId` ON `Notas` (`AlunoId`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `IX_Notas_DisciplinaId` ON `Notas` (`DisciplinaId`);
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\Victo\Desktop\AspNetCore
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+      Failed to determine the https port for redirect.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`
+      FROM `Alunos` AS `a`
+      ORDER BY `a`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`Id`, `p`.`Area`, `p`.`Cpf`, `p`.`DataNascimento`, `p`.`Email`, `p`.`Nome`, `p`.`Siap`, `p`.`Sobrenome`
+      FROM `Professores` AS `p`
+      ORDER BY `p`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `d`.`Id`, `d`.`CargaHoraria`, `d`.`Nome`, `d`.`Periodo`, `d`.`ProfessorId`, `p`.`Id`, `p`.`Area`, `p`.`Cpf`, `p`.`DataNascimento`, `p`.`Email`, `p`.`Nome`, `p`.`Siap`, `p`.`Sobrenome`
+      FROM `Disciplinas` AS `d`
+      LEFT JOIN `Professores` AS `p` ON `d`.`ProfessorId` = `p`.`Id`
+      ORDER BY `d`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `n`.`Id`, `n`.`AlunoId`, `n`.`Descricao`, `n`.`DisciplinaId`, `n`.`Valor`, `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`, `d`.`Id`, `d`.`CargaHoraria`, `d`.`Nome`, `d`.`Periodo`, `d`.`ProfessorId`
+      FROM `Notas` AS `n`
+      INNER JOIN `Alunos` AS `a` ON `n`.`AlunoId` = `a`.`Id`
+      INNER JOIN `Disciplinas` AS `d` ON `n`.`DisciplinaId` = `d`.`Id`
+      ORDER BY `a`.`Nome`, `d`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`Id`, `p`.`Area`, `p`.`Cpf`, `p`.`DataNascimento`, `p`.`Email`, `p`.`Nome`, `p`.`Siap`, `p`.`Sobrenome`
+      FROM `Professores` AS `p`
+      ORDER BY `p`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`
+      FROM `Alunos` AS `a`
+      ORDER BY `a`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `d`.`Id`, `d`.`CargaHoraria`, `d`.`Nome`, `d`.`Periodo`, `d`.`ProfessorId`
+      FROM `Disciplinas` AS `d`
+      ORDER BY `d`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`
+      FROM `Alunos` AS `a`
+      ORDER BY `a`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `d`.`Id`, `d`.`CargaHoraria`, `d`.`Nome`, `d`.`Periodo`, `d`.`ProfessorId`, `p`.`Id`, `p`.`Area`, `p`.`Cpf`, `p`.`DataNascimento`, `p`.`Email`, `p`.`Nome`, `p`.`Siap`, `p`.`Sobrenome`
+      FROM `Disciplinas` AS `d`
+      LEFT JOIN `Professores` AS `p` ON `d`.`ProfessorId` = `p`.`Id`
+      ORDER BY `d`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `n`.`Id`, `n`.`AlunoId`, `n`.`Descricao`, `n`.`DisciplinaId`, `n`.`Valor`, `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`, `d`.`Id`, `d`.`CargaHoraria`, `d`.`Nome`, `d`.`Periodo`, `d`.`ProfessorId`
+      FROM `Notas` AS `n`
+      INNER JOIN `Alunos` AS `a` ON `n`.`AlunoId` = `a`.`Id`
+      INNER JOIN `Disciplinas` AS `d` ON `n`.`DisciplinaId` = `d`.`Id`
+      ORDER BY `a`.`Nome`, `d`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`
+      FROM `Alunos` AS `a`
+      ORDER BY `a`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`Id`, `p`.`Area`, `p`.`Cpf`, `p`.`DataNascimento`, `p`.`Email`, `p`.`Nome`, `p`.`Siap`, `p`.`Sobrenome`
+      FROM `Professores` AS `p`
+      ORDER BY `p`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`
+      FROM `Alunos` AS `a`
+      ORDER BY `a`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`Id`, `p`.`Area`, `p`.`Cpf`, `p`.`DataNascimento`, `p`.`Email`, `p`.`Nome`, `p`.`Siap`, `p`.`Sobrenome`
+      FROM `Professores` AS `p`
+      ORDER BY `p`.`Nome`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `a`.`Id`, `a`.`Cpf`, `a`.`Curso`, `a`.`DataNascimento`, `a`.`Email`, `a`.`Matricula`, `a`.`Nome`, `a`.`Sobrenome`
+      FROM `Alunos` AS `a`
+      ORDER BY `a`.`Nome`

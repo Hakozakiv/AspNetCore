@@ -1,7 +1,5 @@
 using AspNetCore.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AspNetCore.Data
 {
@@ -14,13 +12,13 @@ namespace AspNetCore.Data
             _context = context;
         }
 
-        // Busca todos os alunos de forma assíncrona
-        public async Task<IEnumerable<Aluno>> ObterTodosAsync()
+        public async Task<List<Aluno>> ObterTodosAsync()
         {
-            return await _context.Alunos.ToListAsync();
+            return await _context.Alunos
+                .OrderBy(a => a.Nome)
+                .ToListAsync();
         }
 
-        // Busca por ID (retorna null se não encontrar)
         public async Task<Aluno?> ObterPorIdAsync(int id)
         {
             return await _context.Alunos.FindAsync(id);
@@ -28,6 +26,12 @@ namespace AspNetCore.Data
 
         public async Task AdicionarAsync(Aluno aluno)
         {
+            if (string.IsNullOrWhiteSpace(aluno.Matricula))
+            {
+                var totalAlunos = await _context.Alunos.CountAsync();
+                aluno.Matricula = $"{DateTime.Now.Year}{totalAlunos + 1:D4}";
+            }
+
             await _context.Alunos.AddAsync(aluno);
             await _context.SaveChangesAsync();
         }
@@ -41,18 +45,13 @@ namespace AspNetCore.Data
         public async Task ExcluirAsync(int id)
         {
             var aluno = await ObterPorIdAsync(id);
-            if (aluno != null)
+            if (aluno == null)
             {
-                _context.Alunos.Remove(aluno);
-                await _context.SaveChangesAsync();
+                return;
             }
-        }
-        public async Task<bool> CriarAlunoAsync(Aluno aluno)
-        {
-            aluno.Matricula = $"{DateTime.Now.Year}{_context.Aluno.CountAsync().Result}{new Random().Next(0, 99)}";
-            await _context.AddAsync(aluno);
+
+            _context.Alunos.Remove(aluno);
             await _context.SaveChangesAsync();
-            return true;
         }
     }
 }

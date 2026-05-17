@@ -1,35 +1,31 @@
-using Microsoft.AspNetCore.Mvc; // Resolve IActionResult, Controller, HttpPost
-using AspNetCore.Models;       // Resolve Aluno e Professor (ajuste se seu namespace for outro)
-using System.Collections.Generic; 
+using AspNetCore.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.Controllers
 {
     public class AccountController : Controller
     {
-        // 1. Carrega a página de login
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
-        // 2. Recebe os dados digitados
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Simulação de validação (depois você buscará no Banco de Dados)
-                if (model.Email == "admin@escola.com" && model.Senha == "1234")
-                {
-                    // Se estiver correto, manda para a página inicial do sistema
-                    return RedirectToAction("Index", "Home");
-                }
-
-                // Se estiver errado, exibe erro
-                ModelState.AddModelError(string.Empty, "E-mail ou senha inválidos.");
+                return View(model);
             }
 
+            if (model.Email == "admin@escola.com" && model.Senha == "1234")
+            {
+                return RedirectToAction("Index", "Aluno");
+            }
+
+            ModelState.AddModelError(string.Empty, "E-mail ou senha invalidos.");
             return View(model);
         }
     }

@@ -1,10 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
-using AspNetCore.Models;
+using System.ComponentModel.DataAnnotations;
+
 namespace AspNetCore.Models
 {
     public class Professor : Pessoa
     {
-        public string Siap { get; set; }
-        public string Area{ get; set; }
+        [Required(ErrorMessage = "Informe o SIAP")]
+        public string Siap { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Informe a area")]
+        public string Area { get; set; } = string.Empty;
     }
 }

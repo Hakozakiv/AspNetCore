@@ -1,29 +1,39 @@
-using Microsoft.EntityFrameworkCore; // Resolve DbContext e ModelBuilder
 using AspNetCore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        // O construtor é necessário para receber as configurações de conexão
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        // Definimos os DbSets, que se tornarão as tabelas no banco
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Professor> Professores { get; set; }
-        public DbSet<Disciplina> Disciplinas {get; set;}
+        public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<Nota> Notas { get; set; }
 
-        // Opcional: Configurações extras de modelagem
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Exemplo: Definir que o nome é obrigatório e tem tamanho máximo
             modelBuilder.Entity<Aluno>().Property(a => a.Nome).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<Professor>().Property(p => p.Nome).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Disciplina>().Property(d => d.Nome).IsRequired().HasMaxLength(100);
+
+            modelBuilder.Entity<Nota>()
+                .HasOne(n => n.Aluno)
+                .WithMany(a => a.Notas)
+                .HasForeignKey(n => n.AlunoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Nota>()
+                .HasOne(n => n.Disciplina)
+                .WithMany(d => d.Notas)
+                .HasForeignKey(n => n.DisciplinaId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
