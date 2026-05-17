@@ -11,16 +11,21 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
-        <tr>
-            <td>@item.Nome</td>
-            <td>@item.Matricula</td>
-            <td>@item.Curso</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Matricula</td>
+                <td>@item.Curso</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil"></i> Atualizar
+                    </a>
+                    <a asp-action="Excluir" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+
+            </tr>
+        }
     </tbody>
 </table>

@@ -29,6 +29,6 @@ app.UseAuthorization(); // Essencial para a tela de login funcionar depois
 // 4. ADICIONE ISSO: Define a rota padrão (onde o sistema começa)
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

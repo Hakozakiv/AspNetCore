@@ -14,6 +14,7 @@ namespace AspNetCore.Data
         // Definimos os DbSets, que se tornarão as tabelas no banco
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Professor> Professores { get; set; }
+        public DbSet<Disciplina> Disciplinas {get; set;}
 
         // Opcional: Configurações extras de modelagem
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,36 +1,62 @@
-using Microsoft.AspNetCore.Mvc; // Resolve IActionResult, Controller, HttpPost
-using AspNetCore.Models;       // Resolve Aluno e Professor (ajuste se seu namespace for outro)
-using System.Collections.Generic; 
+using AspNetCore.Models;
+using AspNetCore.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace AspNetCore.Controllers // Verifique se o nome da pasta é Controller ou Controllers
+namespace AspNetCore.Controllers;
+
+public class AlunoController : Controller
 {
-    public class AlunoController : Controller
+    readonly AlunoRepository _alunoRepository;
+
+    public AlunoController(AlunoRepository alunoRepository)
     {
-        // Simulação de uma lista (em um sistema real, viria do Banco de Dados)
-        private static List<Aluno> alunos = new List<Aluno>();
+        _alunoRepository = alunoRepository;
+    }
 
-        // GET: Aluno
-        public IActionResult Index()
-        {
-            return View(alunos);
-        }
+    public async Task<IActionResult> Index()
+    {
+        var alunos = await _alunoRepository.GetAllAlunosAsync();
+        return View(alunos);
+    }
 
-        // GET: Aluno/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+    public IActionResult CriarAluno()
+    {
+        return View();
+    }
 
-        // POST: Aluno/Create
-        [HttpPost]
-        public IActionResult Create(Aluno aluno)
+    [HttpPost]
+    public async Task<IActionResult> CriarAlunoAsync(Aluno aluno)
+    {
+        if(await _alunoRepository.CriarAlunoAsync(aluno))
         {
-            if (ModelState.IsValid)
-            {
-                alunos.Add(aluno); // Salva na lista temporária
-                return RedirectToAction("Index");
-            }
-            return View(aluno);
+            TempData["Tipo"] = "success";
+            TempData["Mensagem"] = $"Aluno {aluno.Nome} cadastrado com sucesso!";
+        } else
+        {
+            TempData["Tipo"] = "danger";
+            TempData["Mensagem"] = $"Aluno {aluno.Nome} não cadastrado!";
         }
+        return RedirectToAction("CriarAluno");
+    }
+
+    public IActionResult AtualizarAluno()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AtualizarAlunoAsync(Aluno aluno)
+    {
+        if(await _alunoRepository.AtualizarAlunoAsync(aluno))
+        {
+            TempData["Tipo"] = "success";
+            TempData["Mensagem"] = $"Aluno {aluno.Nome} atualizado com sucesso!";
+        } else
+        {
+            TempData["Tipo"] = "danger";
+            TempData["Mensagem"] = $"Aluno {aluno.Nome} não atualizado!";
+        }
+        return RedirectToAction("AtualizarAluno");
     }
 }

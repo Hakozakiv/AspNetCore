@@ -8,8 +8,9 @@ namespace AspNetCore.Controllers
         private static List<Professor> professores = new List<Professor>();
 
         // GET: Professor
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var professores = await _professorRepository.ObterTodosAsync();
             return View(professores);
         }
 
@@ -30,5 +31,6 @@ namespace AspNetCore.Controllers
             }
             return View(professor);
         }
+
     }
 }

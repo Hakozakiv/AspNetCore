@@ -34,8 +34,16 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/vhh/AspNetCore/Views/Aluno/CriarAluno.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWx1bm8vQ3JpYXJBbHVuby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/vhh/AspNetCore/Views/Aluno/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWx1bm8vaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vhh/AspNetCore/Views/Disciplinas/CriarDisciplinas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2lwbGluYXMvQ3JpYXJEaXNjaXBsaW5hcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/vhh/AspNetCore/Views/Professor/Professor.cshtml]

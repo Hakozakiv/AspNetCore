@@ -31,10 +31,10 @@
                         <td>@professor.Email</td>
                         <td>@professor.Siap</td>
                         <td>@professor.Area</td>
-                        <td class="text-center">
-                            <a asp-action="Edit" asp-route-id="@professor.Id" class="btn btn-sm btn-warning">Editar</a>
-                            <a asp-action="Delete" asp-route-id="@professor.Id" class="btn btn-sm btn-danger">Excluir</a>
-                        </td>
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@professor.Id" class="btn btn-warning">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@professor.Id" class="btn btn-danger">Excluir</a>
+                        </div>
                     </tr>
                 }
             }
