@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.Controllers
 {
+    [AutenticacaoSession]
     public class AlunoController : Controller
     {
         private readonly AlunoRepository _alunoRepository;

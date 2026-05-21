@@ -1,3 +1,9 @@
+@using Microsoft.AspNetCore.Http
+@{
+    var usuarioLogado = Context.Session.GetString("Usuario");
+    var estaLogado = !string.IsNullOrEmpty(usuarioLogado);
+}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -18,21 +24,45 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Aluno" asp-action="Index">Alunos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Professor" asp-action="Index">Professores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Disciplina" asp-action="Index">Disciplinas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Nota" asp-action="Index">Notas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
+                        @if (estaLogado)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Aluno" asp-action="Index">Alunos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Professor" asp-action="Index">Professores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Disciplina" asp-action="Index">Disciplinas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Nota" asp-action="Index">Notas</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (estaLogado)
+                        {
+                            <li class="nav-item d-flex align-items-center me-2 text-muted">
+                                @usuarioLogado
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-link nav-link text-dark">Sair</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Cadastrar">Cadastrar</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

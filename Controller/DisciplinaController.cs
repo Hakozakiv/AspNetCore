@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.Controllers
 {
+    [AutenticacaoSession]
     public class DisciplinaController : Controller
     {
         private readonly ApplicationDbContext _context;

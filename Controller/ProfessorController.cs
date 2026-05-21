@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.Controllers
 {
+    [AutenticacaoSession]
     public class ProfessorController : Controller
     {
         private readonly ProfessorRepository _professorRepository;
