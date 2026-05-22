@@ -12,6 +12,7 @@
 <table class="table table-striped table-hover border">
     <thead class="table-dark">
         <tr>
+            <th>Foto</th>
             <th>Nome</th>
             <th>E-mail</th>
             <th>Matricula</th>
@@ -25,6 +26,9 @@
             foreach (var aluno in Model)
             {
                 <tr>
+                    <td><div class="d-flex right-align mb-3">
+                        <img src="~/img/Anonimo.jpeg" alt="Alunos" class="mb-3" style="max-width: 60px;" />
+                     </div></td>
                     <td>@aluno.Nome @aluno.Sobrenome</td>
                     <td>@aluno.Email</td>
                     <td>@aluno.Matricula</td>

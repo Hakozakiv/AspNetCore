@@ -26,7 +26,7 @@ namespace AspNetCore.Controllers
             return View(disciplinas);
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> CreateDisciplinaAsync()
         {
             await CarregarProfessoresAsync();
             return View(new Disciplina());
@@ -107,12 +107,10 @@ namespace AspNetCore.Controllers
                 _context.Disciplinas.Remove(disciplina);
                 await _context.SaveChangesAsync();
             }
-
             TempData["Tipo"] = "success";
             TempData["Mensagem"] = "Disciplina excluida com sucesso!";
             return RedirectToAction(nameof(Index));
         }
-
         private async Task CarregarProfessoresAsync(int? professorId = null)
         {
             var professores = await _context.Professores
