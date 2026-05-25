@@ -26,24 +26,42 @@ namespace AspNetCore.Controllers
             return View(disciplinas);
         }
 
-        public async Task<IActionResult> CreateDisciplinaAsync()
+        public async Task<IActionResult> Create()
         {
-            await CarregarProfessoresAsync();
-            return View(new Disciplina());
+            var viewModel = new DisciplinaViewModel
+            {
+                Professores = await ObterProfessoresSelectListAsync()
+            };
+
+            return View(viewModel);
+        }
+
+        public Task<IActionResult> CreateDisciplinaAsync()
+        {
+            return Create();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Disciplina disciplina)
+        public async Task<IActionResult> Create(DisciplinaViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                await CarregarProfessoresAsync(disciplina.ProfessorId);
-                return View(disciplina);
+                viewModel.Professores = await ObterProfessoresSelectListAsync(viewModel.ProfessorId);
+                return View(viewModel);
             }
+
+            var disciplina = new Disciplina
+            {
+                Nome = viewModel.Nome,
+                Periodo = viewModel.Periodo,
+                CargaHoraria = viewModel.CargaHoraria,
+                ProfessorId = viewModel.ProfessorId
+            };
 
             await _context.Disciplinas.AddAsync(disciplina);
             await _context.SaveChangesAsync();
+
             TempData["Tipo"] = "success";
             TempData["Mensagem"] = $"Disciplina {disciplina.Nome} cadastrada com sucesso!";
             return RedirectToAction(nameof(Index));
@@ -78,6 +96,7 @@ namespace AspNetCore.Controllers
 
             _context.Disciplinas.Update(disciplina);
             await _context.SaveChangesAsync();
+
             TempData["Tipo"] = "success";
             TempData["Mensagem"] = $"Disciplina {disciplina.Nome} atualizada com sucesso!";
             return RedirectToAction(nameof(Index));
@@ -107,17 +126,28 @@ namespace AspNetCore.Controllers
                 _context.Disciplinas.Remove(disciplina);
                 await _context.SaveChangesAsync();
             }
+
             TempData["Tipo"] = "success";
             TempData["Mensagem"] = "Disciplina excluida com sucesso!";
             return RedirectToAction(nameof(Index));
         }
+
         private async Task CarregarProfessoresAsync(int? professorId = null)
         {
-            var professores = await _context.Professores
-                .OrderBy(p => p.Nome)
-                .ToListAsync();
+            ViewBag.Professores = await ObterProfessoresSelectListAsync(professorId);
+        }
 
-            ViewBag.Professores = new SelectList(professores, "Id", "Nome", professorId);
+        private async Task<IEnumerable<SelectListItem>> ObterProfessoresSelectListAsync(int? professorId = null)
+        {
+            return await _context.Professores
+                .OrderBy(p => p.Nome)
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Nome + " " + p.Sobrenome,
+                    Selected = professorId.HasValue && p.Id == professorId.Value
+                })
+                .ToListAsync();
         }
     }
 }

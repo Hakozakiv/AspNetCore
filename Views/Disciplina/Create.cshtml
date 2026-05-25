@@ -1,4 +1,4 @@
-@model Disciplina
+@model DisciplinaViewModel
 
 @{
     ViewData["Title"] = "Nova disciplina";
@@ -14,20 +14,23 @@
         <input asp-for="Nome" class="form-control" />
         <span asp-validation-for="Nome" class="text-danger"></span>
     </div>
+
     <div class="col-md-3">
         <label asp-for="Periodo" class="form-label"></label>
         <input asp-for="Periodo" class="form-control" />
         <span asp-validation-for="Periodo" class="text-danger"></span>
     </div>
+
     <div class="col-md-3">
         <label asp-for="CargaHoraria" class="form-label">Carga horaria</label>
         <input asp-for="CargaHoraria" type="number" min="1" class="form-control" />
         <span asp-validation-for="CargaHoraria" class="text-danger"></span>
     </div>
+
     <div class="col-md-6">
         <label asp-for="ProfessorId" class="form-label">Professor</label>
-        <select asp-for="ProfessorId" asp-items="ViewBag.Professores" class="form-select">
-            <option value="">Selecione</option>
+        <select asp-for="ProfessorId" asp-items="Model.Professores" class="form-select">
+            <option value="">Selecione um professor</option>
         </select>
     </div>
 
@@ -36,3 +39,7 @@
         <a asp-action="Index" class="btn btn-secondary">Voltar</a>
     </div>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
