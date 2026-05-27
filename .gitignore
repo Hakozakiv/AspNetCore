@@ -1,0 +1,13 @@
+# Ignorar pastas de compilação (bin e obj)
+[Bb]in/
+[Oo]bj/
+
+# Ignorar arquivos de configuração com dados sensíveis
+appsettings.json
+appsettings.*.json
+
+# Exceção: Se quiser manter o appsettings.json padrão no Git
+# e ignorar apenas as senhas do arquivo de desenvolvimento:
+!appsettings.json
+appsettings.Development.json
+appsettings.Local.json
