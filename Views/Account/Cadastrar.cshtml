@@ -4,13 +4,21 @@
     ViewData["Title"] = "Cadastrar usuario";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4 border p-4 shadow-sm bg-light">
-            <h3 class="text-center">Cadastrar Usuario</h3>
-            <hr />
+<div class="auth-shell">
+    <section class="auth-identity">
+        <div class="auth-emblem">SysAC</div>
+        <p class="auth-kicker">Portal academico</p>
+        <h1>Identidade academica para a rotina da instituicao.</h1>
+        <p class="auth-copy">Cadastre um usuario para acessar os modulos administrativos do sistema.</p>
+    </section>
 
-            <form asp-action="Cadastrar" method="post">
+    <section class="auth-panel">
+        <div class="auth-panel-header">
+            <p class="auth-kicker">Novo acesso</p>
+            <h2>Cadastrar usuario</h2>
+        </div>
+
+        <form asp-action="Cadastrar" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group mb-3">
@@ -26,13 +34,12 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
-            </form>
+        </form>
 
-            <div class="text-center mt-3">
-                <a asp-controller="Account" asp-action="Login">Ja tenho usuario</a>
-            </div>
+        <div class="auth-link">
+            <a asp-controller="Account" asp-action="Login">Ja tenho usuario</a>
         </div>
-    </div>
+    </section>
 </div>
 
 @section Scripts {

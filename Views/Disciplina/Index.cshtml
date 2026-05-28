@@ -4,12 +4,15 @@
     ViewData["Title"] = "Disciplinas";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>Disciplinas</h1>
+<div class="page-heading">
+    <div>
+        <p class="section-kicker">Matriz curricular</p>
+        <h1>Disciplinas</h1>
+    </div>
     <a asp-action="Create" class="btn btn-success">Nova disciplina</a>
 </div>
 
-<table class="table table-striped table-hover border">
+<table class="table table-striped table-hover">
     <thead class="table-dark">
         <tr>
             <th>Nome</th>

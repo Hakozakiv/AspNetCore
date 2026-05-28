@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspNetCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260521204547_InitialCreateMySql")]
-    partial class InitialCreateMySql
+    [Migration("20260528033920_dbcontext")]
+    partial class dbcontext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

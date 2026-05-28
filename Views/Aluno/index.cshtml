@@ -4,12 +4,15 @@
     ViewData["Title"] = "Alunos";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>Alunos</h1>
+<div class="page-heading">
+    <div>
+        <p class="section-kicker">Secretaria academica</p>
+        <h1>Alunos</h1>
+    </div>
     <a asp-action="Create" class="btn btn-success">Novo aluno</a>
 </div>
 
-<table class="table table-striped table-hover border">
+<table class="table table-striped table-hover">
     <thead class="table-dark">
         <tr>
             <th>Foto</th>
@@ -43,7 +46,7 @@
         else
         {
             <tr>
-                <td colspan="5" class="text-center text-muted">Nenhum aluno encontrado.</td>
+                <td colspan="6" class="text-center text-muted">Nenhum aluno encontrado.</td>
             </tr>
         }
     </tbody>
